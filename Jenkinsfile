@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        SONARQUBE = 'SonarQube' 
+        SONARQUBE = 'sonarqube' 
         MAVEN_HOME = '/usr/share/maven' 
     }
 
