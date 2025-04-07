@@ -6,6 +6,13 @@ pipeline {
     }
 
     stages {
+        stage('Check Docker') {
+            steps {
+                script {
+                    sh 'docker --version'
+                }
+
+    stages {
         stage('Checkout') {
             steps {
                 checkout scm  // This will clone your repository
