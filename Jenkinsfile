@@ -11,8 +11,9 @@ pipeline {
                 script {
                     sh 'docker --version'
                 }
+            }
+        }
 
-    stages {
         stage('Checkout') {
             steps {
                 checkout scm  // This will clone your repository
@@ -30,7 +31,6 @@ pipeline {
 
         stage('Run Tests') {
             steps {
-               
                 echo 'Running tests...'
                 sh 'echo "Test successful"'
             }
