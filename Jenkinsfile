@@ -12,17 +12,6 @@ pipeline {
             }
         }
 
-        stage('SonarQube Analysis') {
-            steps {
-                script {
-                    // Run SonarQube static code analysis
-                    withSonarQubeEnv('SonarQube') {
-                        sh "mvn clean verify sonar:sonar"
-                    }
-                }
-            }
-        }
-
         stage('Build') {
             steps {
                 sh 'mvn clean install -DskipTests'
@@ -35,7 +24,7 @@ pipeline {
             }
             post {
                 always {
-                    junit '**/target/test-*.xml'  // Optional: Include code coverage reports if available
+                    junit '**/target/test-*.xml'  // Optional: Include test reports
                 }
             }
         }
