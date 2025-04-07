@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'jenkins/jenkins'  
+        DOCKER_IMAGE = 'jenkins/jenkins:lts'  
     }
 
     stages {
