@@ -14,10 +14,8 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Verify Docker is accessible and version is correct
+                // Example of building a Docker image without Maven
                 script {
-                    sh 'docker --version'
-                    sh 'docker info'
                     sh 'docker build -t ${DOCKER_IMAGE} .'
                 }
             }
@@ -25,6 +23,7 @@ pipeline {
 
         stage('Run Tests') {
             steps {
+               
                 echo 'Running tests...'
                 sh 'echo "Test successful"'
             }
