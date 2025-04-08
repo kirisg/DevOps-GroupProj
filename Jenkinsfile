@@ -2,7 +2,6 @@ pipeline {
     agent any
 
     environment {
-        // Update this to your own Docker Hub repository
         DOCKER_IMAGE = 'kirisg/myjenkins:2.492.3-1' 
     }
 
@@ -17,31 +16,31 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                checkout scm  // This will clone your repository
+                checkout scm  // pipeline checkout stage
             }
         }
 
-        stage('Build Docker Image') {
+        stage('Build') {
             steps {
-                // Build the Docker image with the new tag
                 script {
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
+                    sh 'mvn clean install' 
                 }
             }
         }
 
-        stage('Run Tests') {
+        stage('Test') {
             steps {
-                echo 'Running tests...'
-                sh 'echo "Test successful"'
+                script {
+                    sh 'mvn test'  
+                }
             }
         }
 
         stage('Push Docker Image') {
             steps {
                 script {
-                    // Push the image to your Docker Hub repository
-                    sh 'docker push ${DOCKER_IMAGE}'
+                    sh 'docker build -t yourusername/jenkins:latest .' 
+                    sh 'docker push yourusername/jenkins:latest'  
                 }
             }
         }
