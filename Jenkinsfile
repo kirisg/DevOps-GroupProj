@@ -44,8 +44,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
-                    sh 'docker build -t yourusername/jenkins:latest .' 
-                    sh 'docker push yourusername/jenkins:latest'  
+                    sh 'docker build -t kirisg/jenkins:latest .' 
+                    sh 'docker push kirisg/jenkins:latest'  
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
 
     post {
         always {
-            // Archive build results or Docker images, etc.
+          
             echo 'Cleaning up after the build...'
         }
     }
