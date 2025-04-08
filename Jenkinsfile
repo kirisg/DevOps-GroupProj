@@ -2,46 +2,44 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'jenkins/jenkins:lts'  
-        MAVEN_HOME = tool name: 'Maven 3.6.3', type: 'Maven'
+        MAVEN_HOME = '/usr/share/maven'
+        
     }
-stages {
-     
 
+    stages {
         stage('Checkout') {
             steps {
-                checkout scm  
+                // Checkout the code from GitHub repository
+                git 'https://github.com/kirisg/DevOps-GroupProj.git'
+            }
+        }
+        
+        
+
+        stage('Build') {
+            steps {
+                // Build the project using Maven
+                sh 'mvn clean install'
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                script {
-                    sh 'docker build -t ${DOCKER_IMAGE} .'
-                }
-            }
-        }
-
-         stage('Build') {
-            steps {
-                script {
-                    // Build the project using Maven
-                    sh "mvn clean install"
-                }
-            }
-        }
         stage('Test') {
             steps {
-                script {
-                    // Run unit tests and generate code coverage report
-                    sh "mvn test jacoco:report"
-                }
+                sh 'mvn test'
+                junit '**/target/test-classes/*.xml' 
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                echo 'Deploy your application here'
+               
             }
         }
     }
+
     post {
         always {
-            // Clean up or any post-action tasks
             cleanWs()
         }
     }
