@@ -9,8 +9,7 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Checkout the code from GitHub repository
-                git 'https://github.com/kirisg/DevOps-GroupProj.git'
+                git branch 'main', url:'https://github.com/kirisg/DevOps-GroupProj.git'
             }
         }
         
@@ -18,7 +17,6 @@ pipeline {
 
         stage('Build') {
             steps {
-                // Build the project using Maven
                 sh 'mvn clean install'
             }
         }
