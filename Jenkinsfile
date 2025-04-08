@@ -2,7 +2,8 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_IMAGE = 'jenkins/jenkins:lts'  
+        // Update this to your own Docker Hub repository
+        DOCKER_IMAGE = 'kirisg/myjenkins:2.492.3-1' 
     }
 
     stages {
@@ -22,7 +23,7 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                // Example of building a Docker image without Maven
+                // Build the Docker image with the new tag
                 script {
                     sh 'docker build -t ${DOCKER_IMAGE} .'
                 }
@@ -39,6 +40,7 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 script {
+                    // Push the image to your Docker Hub repository
                     sh 'docker push ${DOCKER_IMAGE}'
                 }
             }
