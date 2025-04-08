@@ -3,16 +3,10 @@ pipeline {
 
     environment {
         DOCKER_IMAGE = 'jenkins/jenkins:lts'  
+        MAVEN_HOME = tool name: 'Maven 3.6.3', type: 'Maven'
     }
-
-    stages {
-        stage('Check Docker') {
-            steps {
-                script {
-                    sh 'docker --version'
-                }
-            }
-        }
+stages {
+     
 
         stage('Checkout') {
             steps {
@@ -28,26 +22,27 @@ pipeline {
             }
         }
 
-        stage('Run Tests') {
-            steps {
-                echo 'Running tests...'
-                sh 'echo "Test successful"'
-            }
-        }
-
-        stage('Push Docker Image') {
+         stage('Build') {
             steps {
                 script {
-                    sh 'docker push ${DOCKER_IMAGE}'
+                    // Build the project using Maven
+                    sh "mvn clean install"
+                }
+            }
+        }
+        stage('Test') {
+            steps {
+                script {
+                    // Run unit tests and generate code coverage report
+                    sh "mvn test jacoco:report"
                 }
             }
         }
     }
-
     post {
         always {
-            // Archive build results or Docker images, etc.
-            echo 'Cleaning up after the build...'
+            // Clean up or any post-action tasks
+            cleanWs()
         }
     }
 }
